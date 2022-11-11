@@ -6,11 +6,11 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:32:51 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/08 23:08:05 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 15:04:08 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft/libft.h"
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -35,7 +35,7 @@ char	*strdup_till_format(const char *str_format, int *char_written)
 	result_end = str_format;
 	while (*result_end && *result_end != '%')
 		result_end++;
-	*char_written *= result_end - str_format;
+	*char_written += result_end - str_format;
 	return (ft_substr(str_format, 0, result_end - str_format));
 }
 

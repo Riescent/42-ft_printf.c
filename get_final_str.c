@@ -6,11 +6,11 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:42:11 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/08 23:09:07 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/11 15:06:27 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libft/libft.h"
 
 size_t	get_final_str_len(t_list *line_lst)
 {
@@ -71,6 +71,6 @@ char	*get_final_str(t_list *line_lst)
 		current = current->next;
 	}
 	*line = '\0';
-	ft_lstclear(&line_lst, &free);
+	//ft_lstclear(&line_lst, &free);
 	return (line_start);
 }
