@@ -6,40 +6,65 @@
 #    By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/07 19:13:43 by vfries            #+#    #+#              #
-#    Updated: 2022/11/08 23:05:20 by vfries           ###   ########lyon.fr    #
+#    Updated: 2022/11/12 21:34:18 by vfries           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =		libftprintf.a
+NAME		=	libftprintf.a
 
-SRCS =		ft_printf.c	\
-			get_final_str.c
+SRCS		=	ft_printf.c		\
+				get_final_str.c
 
-OBJS =		${SRCS:.c=.o}
+DIR_OBJS	=	.objs/
 
-FLAG =		-Wall -Wextra -Werror
+OBJS		=	${addprefix ${DIR_OBJS},${SRCS:.c=.o}}
 
-HEADERS =	ft_printf.h
+FLAG		=	-Wall -Wextra -Werror
 
-INCLUDES =	libft
+HEADERS		=	ft_printf.h	\
+				${LIBFT_H}
 
-LIBFT	=	libft/libft.a
+INCLUDES	=	${LIBFT_PATH}
 
-.PHONY:		all clean fclean re
+LIBFT_PATH	=	libft
 
-all:		${NAME}
+LIBFT_A		=	${LIBFT_PATH}/libft.a
 
-$(NAME):	${OBJS}
-			ar rcs ${NAME} ${OBJS}
+LIBFT_H		=	${LIBFT_PATH}/libft.h
 
-%.o:		%.c ${HEADERS} Makefile ${LIBFT}
-			cc ${FLAG} -I ${INCLUDES} -o ${LIBFT} -c $< -o $@
+CC			=	cc
+
+RMF			=	rm -f
+
+MAKE_LIBFT	=	cd ${LIBFT_PATH} && ${MAKE}
+
+.PHONY:			all clean fclean re
+
+all:			${DIR_OBJS}
+			@${MAKE_LIBFT}
+			@${MAKE} -j ${NAME}
+
+${DIR_OBJS}:
+			mkdir ${DIR_OBJS}
+
+get_libft_objs_path:
+			@${MAKE_LIBFT} echo_objs\
+				| sed 's/^/ /'\
+				| sed -e 's/ ./ ${LIBFT_PATH}/g'
+
+$(NAME):		${OBJS}
+			ar rcs ${NAME} ${OBJS} ${shell ${MAKE} get_libft_objs_path}
+
+${DIR_OBJS}%.o:	%.c ${HEADERS} Makefile
+			${CC} ${FLAG} -I ${INCLUDES} -c $< -o $@
 
 clean:
-			rm -f ${OBJS} ${OBJS_BONUS}
+			@${MAKE_LIBFT} clean
+			${RMF} ${OBJS} ${OBJS_BONUS}
 
-fclean:		clean
-			rm -f ${NAME}
+fclean:			clean
+			${RMF} ${LIBFT_A}
+			${RMF} ${NAME}
 
-re:			fclean
-			${MAKE} all
+re:				fclean
+			@${MAKE} all
