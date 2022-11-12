@@ -6,14 +6,15 @@
 #    By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/07 19:13:43 by vfries            #+#    #+#              #
-#    Updated: 2022/11/12 21:34:18 by vfries           ###   ########lyon.fr    #
+#    Updated: 2022/11/12 22:33:14 by vfries           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	libftprintf.a
 
 SRCS		=	ft_printf.c		\
-				get_final_str.c
+				get_final_str.c	\
+				formating/format.c
 
 DIR_OBJS	=	.objs/
 
@@ -38,14 +39,23 @@ RMF			=	rm -f
 
 MAKE_LIBFT	=	cd ${LIBFT_PATH} && ${MAKE}
 
-.PHONY:			all clean fclean re
+MKDIR		=	mkdir -p
+
+.PHONY:			all get_libft_objs_path clean fclean re
 
 all:			${DIR_OBJS}
 			@${MAKE_LIBFT}
 			@${MAKE} -j ${NAME}
 
 ${DIR_OBJS}:
-			mkdir ${DIR_OBJS}
+			echo ${OBJS} | tr ' ' '\n'\
+				| sed 's|\(.*\)/.*|\1|'\
+				| sed 's/^/${MKDIR} /'\
+				| sh -s
+			# Prints all OBJS. 1 per line
+				# Removes the .o file names
+				# Adds mkdir -p at start of the line
+				# Executes the script (Creates all folders)
 
 get_libft_objs_path:
 			@${MAKE_LIBFT} echo_objs\
@@ -59,7 +69,7 @@ ${DIR_OBJS}%.o:	%.c ${HEADERS} Makefile
 			${CC} ${FLAG} -I ${INCLUDES} -c $< -o $@
 
 clean:
-			@${MAKE_LIBFT} clean
+			${MAKE_LIBFT} clean
 			${RMF} ${OBJS} ${OBJS_BONUS}
 
 fclean:			clean
@@ -67,4 +77,4 @@ fclean:			clean
 			${RMF} ${NAME}
 
 re:				fclean
-			@${MAKE} all
+			${MAKE} all

@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:32:51 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/11 15:04:08 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 21:49:12 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,7 @@
 #define BUFFER_SIZE 100
 
 char	*get_final_str(t_list *line_lst);
-
-char	*format(const char *str_format, int *char_written)
-{
-	(void)char_written;
-	if (*str_format == '\0')
-		return (NULL);
-	if (*str_format == '%')
-		return (ft_strdup("%"));
-	return (NULL);
-}
+char	*format(const char *str_format, int *char_written);
 
 char	*strdup_till_format(const char *str_format, int *char_written)
 {
