@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:42:11 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/11 15:06:27 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/12 21:24:45 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,6 @@ size_t	get_final_str_len(t_list *line_lst)
 	return (len);
 }
 
-void	lst_reverse(t_list **lst)
-{
-	t_list	*previous;
-	t_list	*current;
-	t_list	*next;
-
-	previous = NULL;
-	current = *lst;
-	while (current)
-	{
-		next = current->next;
-		current->next = previous;
-		previous = current;
-		current = next;
-	}
-	*lst = previous;
-}
-
 char	*get_final_str(t_list *line_lst)
 {
 	char	*line;
@@ -54,7 +36,7 @@ char	*get_final_str(t_list *line_lst)
 	char	*list_str;
 	t_list	*current;
 
-	lst_reverse(&line_lst);
+	ft_lst_reverse(&line_lst);
 	line = malloc(get_final_str_len(line_lst) + 1);
 	if (line == NULL)
 	{
@@ -71,6 +53,5 @@ char	*get_final_str(t_list *line_lst)
 		current = current->next;
 	}
 	*line = '\0';
-	//ft_lstclear(&line_lst, &free);
 	return (line_start);
 }
