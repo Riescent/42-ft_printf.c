@@ -1,6 +1,9 @@
 # Testing
 test
 
+# IDE
+.vscode
+
 # Prerequisites
 *.d
 
