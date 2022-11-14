@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:06:21 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 04:30:17 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 05:20:41 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-char	*format_u(va_list *args, int *char_written)
+char	*format_u(va_list *args)
 {
 	char			buf[11];
 	char			*buf_ptr;
@@ -22,10 +22,7 @@ char	*format_u(va_list *args, int *char_written)
 
 	n = va_arg(*args, unsigned int);
 	if (n == 0)
-	{
-		(*char_written)++;
 		return (ft_strdup("0"));
-	}
 	buf[10] = '\0';
 	buf_ptr = buf + 9;
 	while (n > 0)
@@ -34,12 +31,10 @@ char	*format_u(va_list *args, int *char_written)
 		n /= 10;
 	}
 	buf_ptr = ft_strdup(buf_ptr + 1);
-	if (buf_ptr != NULL)
-		*char_written += ft_strlen(buf_ptr);
 	return (buf_ptr);
 }
 
-char	*format_x(char *base, va_list *args, int *char_written)
+char	*format_x(char *base, va_list *args)
 {
 	size_t	n;
 	char	buf[17];
@@ -47,10 +42,7 @@ char	*format_x(char *base, va_list *args, int *char_written)
 
 	n = va_arg(*args, size_t);
 	if (n == 0)
-	{
-		(*char_written)++;
 		return (ft_strdup("0"));
-	}
 	buf[16] = '\0';
 	buf_ptr = buf + 15;
 	while (n != 0)
@@ -58,11 +50,5 @@ char	*format_x(char *base, va_list *args, int *char_written)
 		*buf_ptr-- = base[n % 16];
 		n /= 16;
 	}
-	*char_written += ft_strlen(++buf_ptr);
-	return (ft_strdup(buf_ptr));
-}
-char	*format_percent(int *char_written)
-{
-	(*char_written)++;
-	return (ft_strdup("%"));
+	return (ft_strdup(buf_ptr + 1));
 }

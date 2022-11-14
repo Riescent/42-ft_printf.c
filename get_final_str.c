@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:42:11 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/12 22:58:30 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 05:11:00 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,29 @@ size_t	get_final_str_len(t_list *line_lst)
 	return (len);
 }
 
-char	*get_final_str(t_list *line_lst)
+char	*get_final_str(t_list *line_lst, int *char_written)
 {
-	char	*line;
-	char	*line_start;
-	char	*list_str;
+	char	*final_str;
+	char	*final_str_start;
+	char	*node_str;
 	t_list	*current;
 
-	line = malloc(get_final_str_len(line_lst) + 1);
-	if (line == NULL)
+	*char_written = get_final_str_len(line_lst);
+	final_str = malloc(*char_written + 1);
+	if (final_str == NULL)
 	{
 		ft_lstclear(&line_lst, &free);
 		return (NULL);
 	}
-	line_start = line;
+	final_str_start = final_str;
 	current = line_lst;
 	while (current)
 	{
-		list_str = current->content;
-		while (*list_str)
-			*line++ = *list_str++;
+		node_str = current->content;
+		while (*node_str)
+			*final_str++ = *node_str++;
 		current = current->next;
 	}
-	*line = '\0';
-	return (line_start);
+	*final_str = '\0';
+	return (final_str_start);
 }

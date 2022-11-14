@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:32:51 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 04:45:58 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 05:22:52 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,34 @@
 
 #define BUFFER_SIZE 100
 
-char	*get_final_str(t_list *line_lst);
-char	*format(const char *str_format, int *char_written, va_list *args);
+char	*get_final_str(t_list *line_lst, int *char_written);
+char	*format(const char *str_format, va_list *args);
 
-char	*strdup_till_format(const char **str_format, int *char_written)
+char	*strdup_till_format(const char **str_format)
 {
 	const char	*result_start;
 
 	result_start = *str_format;
 	while (**str_format && **str_format != '%')
 		(*str_format)++;
-	*char_written += *str_format - result_start;
 	return (ft_substr(result_start, 0, *str_format - result_start));
 }
 
-t_list	*get_str_list(const char *str_format, va_list *args, int *char_written)
+t_list	*get_str_list(const char *str_format, va_list *args)
 {
 	char	*str;
 	t_list	*str_list;
 
 	str_list = NULL;
-	*char_written = 0;
 	while (*str_format)
 	{
 		if (*str_format == '%')
 		{
-			str = format(str_format + 1, char_written, args);
+			str = format(str_format + 1, args);
 			str_format += 2;
 		}
 		else
-			str = strdup_till_format(&str_format, char_written);
+			str = strdup_till_format(&str_format);
 		if (str == NULL)
 		{
 			ft_lstclear(&str_list, free);
@@ -67,9 +65,13 @@ int	ft_printf(const char *str_format, ...)
 	char	*final_str;
 
 	va_start(args, str_format);
-	str_list = get_str_list(str_format, &args, &char_written);
+	str_list = get_str_list(str_format, &args);
 	va_end(args);
-	final_str = get_final_str(str_list);
+	if (str_list == NULL)
+		return (-1);
+	final_str = get_final_str(str_list, &char_written);
+	if (final_str == NULL)
+		return (-1);
 	write(0, final_str, char_written);
 	free(final_str);
 	ft_lstclear(&str_list, &free);
