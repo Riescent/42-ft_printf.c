@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:42:11 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 18:04:49 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 19:45:01 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,28 @@ void	free_content(void *content)
 		free(content);
 }
 
-size_t	get_final_str_len(t_list *line_lst)
+int	get_final_str_len(t_list *str_list)
 {
-	size_t	len;
-	char	*str_end;
+	int		len;
 
 	len = 0;
-	while (line_lst)
+	while (str_list)
 	{
-		if (line_lst->content == (void *)-1)
+		if (str_list->content == (void *)-1)
 			len++;
 		else
-		{
-			str_end = line_lst->content;
-			while (*str_end)
-				str_end++;
-			len += str_end - (char *)line_lst->content;
-		}
-		line_lst = line_lst->next;
+			len += ft_strlen(str_list->content);
+		str_list = str_list->next;
 	}
 	return (len);
 }
 
-void	fill_final_str(char *final_str, t_list *line_lst)
+void	fill_final_str(char *final_str, t_list *str_list)
 {
 	char	*node_str;
 	t_list	*current;
 
-	current = line_lst;
+	current = str_list;
 	while (current)
 	{
 		if (current->content == (void *)-1)
@@ -58,20 +52,16 @@ void	fill_final_str(char *final_str, t_list *line_lst)
 		}
 		current = current->next;
 	}
-	*final_str = '\0';
 }
 
-char	*get_final_str(t_list *line_lst, int *char_written)
+char	*get_final_str(t_list *str_list, int *char_written)
 {
 	char	*final_str;
 
-	*char_written = get_final_str_len(line_lst);
+	*char_written = get_final_str_len(str_list);
 	final_str = malloc(*char_written + 1);
 	if (final_str == NULL)
-	{
-		ft_lstclear(&line_lst, &free_content);
 		return (NULL);
-	}
-	fill_final_str(final_str, line_lst);
+	fill_final_str(final_str, str_list);
 	return (final_str);
 }

@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:06:21 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 18:07:08 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 19:35:02 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ char	*format_u(va_list *args)
 char	*format_x(char *base, va_list *args)
 {
 	unsigned int	n;
-	char			buf[17];
+	char			buf[9];
 	char			*buf_ptr;
 
 	n = va_arg(*args, unsigned int);
 	if (n == 0)
 		return (ft_strdup("0"));
-	buf[16] = '\0';
-	buf_ptr = buf + 15;
+	buf[8] = '\0';
+	buf_ptr = buf + 7;
 	while (n != 0)
 	{
 		*buf_ptr-- = base[n % 16];

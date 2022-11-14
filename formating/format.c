@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:48:56 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 17:27:56 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 19:46:24 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 char	*format_u(va_list *args);
 char	*format_x(char *base, va_list *args);
 
-#define HEXA_LOW "0123456789abcdef"
-#define HEXA_UP "0123456789ABCDEF"
+#define HEXA_LOWER "0123456789abcdef"
+#define HEXA_UPPER "0123456789ABCDEF"
 
 char	*format_c(va_list *args)
 {
@@ -42,12 +42,8 @@ char	*format_s(va_list *args)
 
 	str = va_arg(*args, char *);
 	if (str == NULL)
-		str = ft_strdup("(null)");
-	else
-		str = ft_strdup(str);
-	if (str == NULL)
-		return (NULL);
-	return (str);
+		return (ft_strdup("(null)"));
+	return (ft_strdup(str));
 }
 
 char	*format_p(va_list *args, char *base)
@@ -83,15 +79,15 @@ char	*format(const char *str_format, va_list *args)
 	else if (*str_format == 's')
 		return (format_s(args));
 	else if (*str_format == 'p')
-		return (format_p(args, HEXA_LOW));
+		return (format_p(args, HEXA_LOWER));
 	else if (*str_format == 'd' || *str_format == 'i')
 		return (format_d_i(args));
 	else if (*str_format == 'u')
 		return (format_u(args));
 	else if (*str_format == 'x')
-		return (format_x(HEXA_LOW, args));
+		return (format_x(HEXA_LOWER, args));
 	else if (*str_format == 'X')
-		return (format_x(HEXA_UP, args));
+		return (format_x(HEXA_UPPER, args));
 	else if (*str_format == '%')
 		return (ft_strdup("%"));
 	return (NULL);

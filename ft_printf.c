@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:32:51 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 09:32:54 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 19:44:05 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,10 @@ int	ft_printf(const char *str_format, ...)
 		return (-1);
 	final_str = get_final_str(str_list, &char_written);
 	if (final_str == NULL)
+	{
+		ft_lstclear(&str_list, &free_content);
 		return (-1);
+	}
 	write(1, final_str, char_written);
 	free(final_str);
 	ft_lstclear(&str_list, &free_content);

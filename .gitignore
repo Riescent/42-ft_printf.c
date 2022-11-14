@@ -1,6 +1,7 @@
 # Testing
 test
 printfTester
+ft_printf_tester
 
 # IDE
 .vscode
