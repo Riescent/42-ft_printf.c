@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:06:21 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 04:08:53 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 04:30:17 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-char	*format_u(const char **str_format, va_list *args, int *char_written)
+char	*format_u(va_list *args, int *char_written)
 {
 	char			buf[11];
 	char			*buf_ptr;
 	unsigned int	n;
 
-	(*str_format)++;
 	n = va_arg(*args, unsigned int);
 	if (n == 0)
 	{
@@ -40,14 +39,12 @@ char	*format_u(const char **str_format, va_list *args, int *char_written)
 	return (buf_ptr);
 }
 
-char	*format_x(const char **str_format, char *base, va_list *args,
-		int *char_written)
+char	*format_x(char *base, va_list *args, int *char_written)
 {
 	size_t	n;
 	char	buf[17];
 	char	*buf_ptr;
 
-	(*str_format)++;
 	n = va_arg(*args, size_t);
 	if (n == 0)
 	{
@@ -64,9 +61,8 @@ char	*format_x(const char **str_format, char *base, va_list *args,
 	*char_written += ft_strlen(++buf_ptr);
 	return (ft_strdup(buf_ptr));
 }
-char	*format_percent(const char **str_format, int *char_written)
+char	*format_percent(int *char_written)
 {
 	(*char_written)++;
-	(*str_format)++;
 	return (ft_strdup("%"));
 }
