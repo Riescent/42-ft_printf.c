@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:48:56 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 05:18:35 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 09:14:44 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,15 @@ char	*format_x(char *base, va_list *args);
 char	*format_c(va_list *args)
 {
 	char	*str;
+	char	c;
 
+	c = va_arg(*args, int);
+	if (c == '\0')
+		return ((void *)-1);
 	str = malloc(sizeof(char) * 2);
 	if (str == NULL)
 		return (NULL);
-	*str = va_arg(*args, int);
+	*str = c;
 	str[1] = '\0';
 	return (str);
 }
@@ -61,12 +65,7 @@ char	*format_p(va_list *args)
 
 char	*format_d_i(va_list *args)
 {
-	char	*str;
-
-	str = ft_itoa(va_arg(*args, int));
-	if (str == NULL)
-		return (NULL);
-	return (str);
+	return (ft_itoa(va_arg(*args, int)));
 }
 
 char	*format(const char *str_format, va_list *args)

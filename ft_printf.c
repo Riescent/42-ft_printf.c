@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:32:51 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 05:22:52 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 09:32:54 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 #define BUFFER_SIZE 100
 
+void	free_content(void *content);
 char	*get_final_str(t_list *line_lst, int *char_written);
 char	*format(const char *str_format, va_list *args);
 
@@ -47,7 +48,7 @@ t_list	*get_str_list(const char *str_format, va_list *args)
 			str = strdup_till_format(&str_format);
 		if (str == NULL)
 		{
-			ft_lstclear(&str_list, free);
+			ft_lstclear(&str_list, &free_content);
 			return (NULL);
 		}
 		else
@@ -72,8 +73,8 @@ int	ft_printf(const char *str_format, ...)
 	final_str = get_final_str(str_list, &char_written);
 	if (final_str == NULL)
 		return (-1);
-	write(0, final_str, char_written);
+	write(1, final_str, char_written);
 	free(final_str);
-	ft_lstclear(&str_list, &free);
+	ft_lstclear(&str_list, &free_content);
 	return (char_written);
 }
