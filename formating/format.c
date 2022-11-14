@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:48:56 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/13 23:04:22 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 02:25:18 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#define HEXA_MIN "0123456789abcdef"
-#define HEXA_MAJ "0123456789ABCDEF"
+#define HEXA_LOW "0123456789abcdef"
+#define HEXA_UP "0123456789ABCDEF"
 
-char	*format_percent(const char **str_format);
+char	*format_u(const char **str_format, va_list *args, int *char_written);
+char	*format_x(const char **str_format, char *base, va_list *args,
+			int *char_written);
+char	*format_percent(const char **str_format, int *char_written);
 
 char	*format_c(const char **str_format, va_list *args, int *char_written)
 {
@@ -49,7 +52,8 @@ char	*format_p(const char **str_format, va_list *args, int *char_written)
 {
 	char	*hexa_value;
 
-	hexa_value = format_x(str_format, HEXA_MIN, args);
+	hexa_value = format_x(str_format, HEXA_LOW, args, char_written);
+	return (hexa_value);
 }
 
 char	*format_d_i(const char **str_format, va_list *args, int *char_written)
@@ -77,10 +81,10 @@ char	*format(const char **str_format, int *char_written, va_list *args)
 	else if (**str_format == 'u')
 		return (format_u(str_format, args, char_written));
 	else if (**str_format == 'x')
-		return (format_x(str_format, HEXA_MIN, args, char_written));
+		return (format_x(str_format, HEXA_LOW, args, char_written));
 	else if (**str_format == 'X')
-		return (format_x(str_format, HEXA_MAJ, args, char_written));
+		return (format_x(str_format, HEXA_UP, args, char_written));
 	else if (**str_format == '%')
-		return (format_percent(str_format), char_written);
+		return (format_percent(str_format, char_written));
 	return (NULL);
 }
