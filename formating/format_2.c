@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:06:21 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 02:25:53 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 04:08:53 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*format_x(const char **str_format, char *base, va_list *args,
 		*buf_ptr-- = base[n % 16];
 		n /= 16;
 	}
-	*char_written += ft_strlen(buf_ptr);
+	*char_written += ft_strlen(++buf_ptr);
 	return (ft_strdup(buf_ptr));
 }
 char	*format_percent(const char **str_format, int *char_written)

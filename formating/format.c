@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:48:56 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 02:25:18 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 04:14:27 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,15 @@ char	*format_s(const char **str_format, va_list *args, int *char_written)
 char	*format_p(const char **str_format, va_list *args, int *char_written)
 {
 	char	*hexa_value;
+	char	*str;
 
 	hexa_value = format_x(str_format, HEXA_LOW, args, char_written);
-	return (hexa_value);
+	if (hexa_value == NULL)
+		return (NULL);
+	str = ft_strjoin("0x", hexa_value);
+	free(hexa_value);
+	*char_written += 2;
+	return (str);
 }
 
 char	*format_d_i(const char **str_format, va_list *args, int *char_written)
