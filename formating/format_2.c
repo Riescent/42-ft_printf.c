@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:06:21 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 17:34:23 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 18:07:08 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ char	*format_u(va_list *args)
 
 char	*format_x(char *base, va_list *args)
 {
-	unsigned int		n;
-	char		buf[17];
-	char		*buf_ptr;
+	unsigned int	n;
+	char			buf[17];
+	char			*buf_ptr;
 
 	n = va_arg(*args, unsigned int);
 	if (n == 0)

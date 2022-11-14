@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:42:11 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 09:33:17 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 18:04:49 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,11 @@ size_t	get_final_str_len(t_list *line_lst)
 	return (len);
 }
 
-char	*get_final_str(t_list *line_lst, int *char_written)
+void	fill_final_str(char *final_str, t_list *line_lst)
 {
-	char	*final_str;
-	char	*final_str_start;
 	char	*node_str;
 	t_list	*current;
 
-	*char_written = get_final_str_len(line_lst);
-	final_str = malloc(*char_written + 1);
-	if (final_str == NULL)
-	{
-		ft_lstclear(&line_lst, &free_content);
-		return (NULL);
-	}
-	final_str_start = final_str;
 	current = line_lst;
 	while (current)
 	{
@@ -69,5 +59,19 @@ char	*get_final_str(t_list *line_lst, int *char_written)
 		current = current->next;
 	}
 	*final_str = '\0';
-	return (final_str_start);
+}
+
+char	*get_final_str(t_list *line_lst, int *char_written)
+{
+	char	*final_str;
+
+	*char_written = get_final_str_len(line_lst);
+	final_str = malloc(*char_written + 1);
+	if (final_str == NULL)
+	{
+		ft_lstclear(&line_lst, &free_content);
+		return (NULL);
+	}
+	fill_final_str(final_str, line_lst);
+	return (final_str);
 }
