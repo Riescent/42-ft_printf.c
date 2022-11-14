@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:48:56 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 09:14:44 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 17:27:56 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,25 @@ char	*format_s(va_list *args)
 	return (str);
 }
 
-char	*format_p(va_list *args)
+char	*format_p(va_list *args, char *base)
 {
-	char	*hexa_value;
-	char	*str;
+	size_t	n;
+	char	buf[19];
+	char	*buf_ptr;
 
-	hexa_value = format_x(HEXA_LOW, args);
-	if (hexa_value == NULL)
-		return (NULL);
-	str = ft_strjoin("0x", hexa_value);
-	free(hexa_value);
-	return (str);
+	n = va_arg(*args, size_t);
+	if (n == 0)
+		return (ft_strdup("0x0"));
+	buf[18] = '\0';
+	buf_ptr = buf + 17;
+	while (n != 0)
+	{
+		*buf_ptr-- = base[n % 16];
+		n /= 16;
+	}
+	*buf_ptr-- = 'x';
+	*buf_ptr = '0';
+	return (ft_strdup(buf_ptr));
 }
 
 char	*format_d_i(va_list *args)
@@ -75,7 +83,7 @@ char	*format(const char *str_format, va_list *args)
 	else if (*str_format == 's')
 		return (format_s(args));
 	else if (*str_format == 'p')
-		return (format_p(args));
+		return (format_p(args, HEXA_LOW));
 	else if (*str_format == 'd' || *str_format == 'i')
 		return (format_d_i(args));
 	else if (*str_format == 'u')

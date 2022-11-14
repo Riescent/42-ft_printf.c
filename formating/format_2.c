@@ -6,13 +6,14 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:06:21 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 09:49:27 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/14 17:34:23 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include <stdarg.h>
 #include <stdlib.h>
+#include <limits.h>
 
 char	*format_u(va_list *args)
 {
@@ -36,11 +37,11 @@ char	*format_u(va_list *args)
 
 char	*format_x(char *base, va_list *args)
 {
-	size_t	n;
-	char	buf[17];
-	char	*buf_ptr;
+	unsigned int		n;
+	char		buf[17];
+	char		*buf_ptr;
 
-	n = va_arg(*args, size_t);
+	n = va_arg(*args, unsigned int);
 	if (n == 0)
 		return (ft_strdup("0"));
 	buf[16] = '\0';
