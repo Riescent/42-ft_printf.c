@@ -6,7 +6,7 @@
 #    By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/07 19:13:43 by vfries            #+#    #+#              #
-#    Updated: 2022/11/14 09:35:38 by vfries           ###   ########lyon.fr    #
+#    Updated: 2022/11/16 00:55:17 by vfries           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,6 @@ RMF			=	rm -f
 MAKE_LIBFT	=	cd ${LIBFT_PATH} && ${MAKE}
 
 MKDIR		=	mkdir -p
-
-.PHONY:			all get_libft_objs_path clean fclean re
 
 all:			${DIR_OBJS}
 			@${MAKE_LIBFT}
@@ -76,3 +74,5 @@ fclean:			clean
 
 re:				fclean
 			${MAKE} all
+
+.PHONY:			all get_libft_objs_path clean fclean re
