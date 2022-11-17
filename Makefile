@@ -6,7 +6,7 @@
 #    By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/07 19:13:43 by vfries            #+#    #+#              #
-#    Updated: 2022/11/16 00:55:17 by vfries           ###   ########lyon.fr    #
+#    Updated: 2022/11/17 02:11:11 by vfries           ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		=	libftprintf.a
 SRCS		=	ft_printf.c			\
 				get_final_str.c		\
 				formating/format.c	\
-				formating/format_2.c
+				formating/format_u_x.c
 
 DIR_OBJS	=	.objs/
 

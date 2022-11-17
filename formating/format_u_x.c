@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format_2.c                                         :+:      :+:    :+:   */
+/*   format_u_x.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 21:06:21 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 19:35:02 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 02:16:06 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include <stdarg.h>
-#include <stdlib.h>
-#include <limits.h>
 
 char	*format_u(va_list *args)
 {
@@ -31,8 +29,7 @@ char	*format_u(va_list *args)
 		*buf_ptr-- = n % 10 + '0';
 		n /= 10;
 	}
-	buf_ptr = ft_strdup(buf_ptr + 1);
-	return (buf_ptr);
+	return (ft_strdup(buf_ptr + 1));
 }
 
 char	*format_x(char *base, va_list *args)

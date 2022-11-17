@@ -6,20 +6,17 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:32:51 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 19:44:05 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 02:26:13 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include <stdarg.h>
-#include <stdlib.h>
 #include <unistd.h>
-
-#define BUFFER_SIZE 100
 
 void	free_content(void *content);
 char	*get_final_str(t_list *line_lst, int *char_written);
-char	*format(const char *str_format, va_list *args);
+char	*format(const char **str_format, va_list *args);
 
 char	*strdup_till_format(const char **str_format)
 {
@@ -41,8 +38,9 @@ t_list	*get_str_list(const char *str_format, va_list *args)
 	{
 		if (*str_format == '%')
 		{
-			str = format(str_format + 1, args);
-			str_format += 2;
+			str_format++;
+			str = format(&str_format, args);
+			str_format++;
 		}
 		else
 			str = strdup_till_format(&str_format);
@@ -51,7 +49,7 @@ t_list	*get_str_list(const char *str_format, va_list *args)
 			ft_lstclear(&str_list, &free_content);
 			return (NULL);
 		}
-		else
+		if (str != (void *)-2)
 			ft_lstadd_front(&str_list, ft_lstnew(str));
 	}
 	ft_lst_reverse(&str_list);

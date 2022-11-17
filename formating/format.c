@@ -6,13 +6,12 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 21:48:56 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 19:46:24 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 02:20:09 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include <stdarg.h>
-#include <stdlib.h>
 
 char	*format_u(va_list *args);
 char	*format_x(char *base, va_list *args);
@@ -67,28 +66,24 @@ char	*format_p(va_list *args, char *base)
 	return (ft_strdup(buf_ptr));
 }
 
-char	*format_d_i(va_list *args)
+char	*format(const char **str_format, va_list *args)
 {
-	return (ft_itoa(va_arg(*args, int)));
-}
-
-char	*format(const char *str_format, va_list *args)
-{
-	if (*str_format == 'c')
+	if (**str_format == 'c')
 		return (format_c(args));
-	else if (*str_format == 's')
+	else if (**str_format == 's')
 		return (format_s(args));
-	else if (*str_format == 'p')
+	else if (**str_format == 'p')
 		return (format_p(args, HEXA_LOWER));
-	else if (*str_format == 'd' || *str_format == 'i')
-		return (format_d_i(args));
-	else if (*str_format == 'u')
+	else if (**str_format == 'd' || **str_format == 'i')
+		return (ft_itoa(va_arg(*args, int)));
+	else if (**str_format == 'u')
 		return (format_u(args));
-	else if (*str_format == 'x')
+	else if (**str_format == 'x')
 		return (format_x(HEXA_LOWER, args));
-	else if (*str_format == 'X')
+	else if (**str_format == 'X')
 		return (format_x(HEXA_UPPER, args));
-	else if (*str_format == '%')
+	else if (**str_format == '%')
 		return (ft_strdup("%"));
-	return (NULL);
+	(*str_format)--;
+	return ((void *)-2);
 }

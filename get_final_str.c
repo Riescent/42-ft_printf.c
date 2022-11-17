@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 22:42:11 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/14 19:45:01 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 02:36:18 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_content(void *content)
 {
-	if (content != NULL && content != (void *)-1)
+	if (content != (void *)-1)
 		free(content);
 }
 
@@ -34,9 +34,14 @@ int	get_final_str_len(t_list *str_list)
 	return (len);
 }
 
+void	copy_str_and_increment_final_str(char **final_str, const char *node_str)
+{
+	while (*node_str)
+		*(*final_str)++ = *node_str++;
+}
+
 void	fill_final_str(char *final_str, t_list *str_list)
 {
-	char	*node_str;
 	t_list	*current;
 
 	current = str_list;
@@ -45,11 +50,7 @@ void	fill_final_str(char *final_str, t_list *str_list)
 		if (current->content == (void *)-1)
 			*final_str++ = '\0';
 		else
-		{
-			node_str = current->content;
-			while (*node_str)
-				*final_str++ = *node_str++;
-		}
+			copy_str_and_increment_final_str(&final_str, current->content);
 		current = current->next;
 	}
 }
