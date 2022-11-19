@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:32:51 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/17 18:52:41 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/19 17:06:25 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,36 @@ char	*strdup_till_format(const char **str_format)
 	return (ft_substr(result_start, 0, *str_format - result_start));
 }
 
+void	*clear_str_list_and_return_null(t_list **str_list)
+{
+	ft_lstclear(str_list, &free_content);
+	return (NULL);
+}
+
+char	add_str_to_str_list(t_list **str_list, t_list *new)
+{
+	static t_list	*last_elem = NULL;
+
+	if (new == NULL)
+		return (-1);
+	if (*str_list == NULL)
+	{
+		*str_list = new;
+		last_elem = new;
+		return (0);
+	}
+	last_elem->next = new;
+	last_elem = new;
+	return (0);
+}
+
 t_list	*get_str_list(const char *str_format, va_list *args)
 {
 	char	*str;
 	t_list	*str_list;
 
+	if (*str_format == '\0')
+		return ((void *)-1);
 	str_list = NULL;
 	while (*str_format)
 	{
@@ -45,14 +70,11 @@ t_list	*get_str_list(const char *str_format, va_list *args)
 		else
 			str = strdup_till_format(&str_format);
 		if (str == NULL)
-		{
-			ft_lstclear(&str_list, &free_content);
-			return (NULL);
-		}
+			clear_str_list_and_return_null(&str_list);
 		if (str != (void *)-2)
-			ft_lstadd_front(&str_list, ft_lstnew(str));
+			if (add_str_to_str_list(&str_list, ft_lstnew(str)) == -1)
+				return (clear_str_list_and_return_null(&str_list));
 	}
-	ft_lst_reverse(&str_list);
 	return (str_list);
 }
 
@@ -69,6 +91,8 @@ int	ft_printf(const char *str_format, ...)
 	va_end(args);
 	if (str_list == NULL)
 		return (-1);
+	if (str_list == (void *)-1)
+		return (0);
 	final_str = get_final_str(str_list, &char_written);
 	if (final_str == NULL)
 	{
