@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 21:32:51 by vfries            #+#    #+#             */
-/*   Updated: 2022/11/19 17:06:25 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2022/11/19 17:14:22 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ t_list	*get_str_list(const char *str_format, va_list *args)
 int	ft_printf(const char *str_format, ...)
 {
 	int		char_written;
-	ssize_t	temp;
 	t_list	*str_list;
 	va_list	args;
 	char	*final_str;
@@ -99,10 +98,9 @@ int	ft_printf(const char *str_format, ...)
 		ft_lstclear(&str_list, &free_content);
 		return (-1);
 	}
-	temp = write(1, final_str, char_written);
+	if (write(1, final_str, char_written) == -1)
+		char_written = -1;
 	free(final_str);
 	ft_lstclear(&str_list, &free_content);
-	if (temp == -1)
-		return (-1);
 	return (char_written);
 }
